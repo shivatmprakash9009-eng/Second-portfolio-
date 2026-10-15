@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #100425;
+  --color-magenta: #dc00d3;
+  --color-cyan: #0cffff;
+  --color-neon: #00f2fe;
+  --color-electric: #e100ff;
+  --color-indigo: #7f00ff;
+  --color-muted: #b3b8d2;
+  --color-subtle: #a0aec0;
+
+  --font-display: var(--font-josefin), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --animate-spin-slow: spin 16s linear infinite;
+  --animate-pulse-glow: pulse-glow 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-display);
+  color: #ffffff;
+  background: linear-gradient(to bottom, #070314 0%, #0d0626 50%, #05020c 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgb(220 0 211 / 0.45);
+  color: #fff;
+}
+
+/* Glassmorphism spec */
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(13, 6, 38, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-gradient {
+  background-image: linear-gradient(90deg, #00f2fe, #e100ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-gradient {
+  background-image: linear-gradient(90deg, #4fd8f0 0%, #7f5cf0 55%, #a63fd1 100%);
+  box-shadow:
+    0 0 24px rgb(0 242 254 / 0.35),
+    0 0 40px rgb(225 0 255 / 0.25);
+}
+
+.line-flow {
+  animation: dash 6s linear infinite;
+}
+
+/* Form fields with gradient focus ring */
+.field-ring {
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(rgba(5, 2, 12, 0.55), rgba(5, 2, 12, 0.55)) padding-box,
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)) border-box;
+}
+
+.field-ring:focus-within {
+  background:
+    linear-gradient(rgba(5, 2, 12, 0.85), rgba(5, 2, 12, 0.85)) padding-box,
+    linear-gradient(90deg, #00f2fe, #7f00ff, #e100ff) border-box;
+  box-shadow: 0 0 18px rgb(127 0 255 / 0.25);
+}
+
+.field-ring[data-error="true"] {
+  background:
+    linear-gradient(rgba(5, 2, 12, 0.7), rgba(5, 2, 12, 0.7)) padding-box,
+    linear-gradient(#ff4d4d, #ff4d4d) border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
