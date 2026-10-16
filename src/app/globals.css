@@ -1,37 +1,39 @@
 @import "tailwindcss";
 
+/* Tokens come straight from the Figma design system page. */
 @theme inline {
-  --color-ink: #100425;
-  --color-magenta: #dc00d3;
-  --color-cyan: #0cffff;
-  --color-neon: #00f2fe;
-  --color-electric: #e100ff;
-  --color-indigo: #7f00ff;
-  --color-muted: #b3b8d2;
-  --color-subtle: #a0aec0;
+  --color-magenta: #dc00d3; /* Slightly Desaturated Cyan (primary) */
+  --color-cyan: #0cffff; /* Dark Sky (primary) */
+  --color-ink: #100425; /* Grayish Dark Blue (primary) */
+  --color-page: #f8f8f8; /* Very Light Grey (BG) */
+  --color-field: #fafafa; /* Light Grey (Text Field) */
+  --color-card: #1b0b3b;
+  --color-card-2: #2a1160;
+  --color-body: #6e6a80;
+  --color-heading: #2d2b36;
 
   --font-display: var(--font-josefin), system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
 
-  --animate-spin-slow: spin 16s linear infinite;
-  --animate-pulse-glow: pulse-glow 6s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-pulse-glow: pulse-glow 7s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    opacity: 0.55;
+    opacity: 0.6;
     transform: scale(1);
   }
   50% {
-    opacity: 0.9;
-    transform: scale(1.08);
+    opacity: 0.95;
+    transform: scale(1.06);
   }
 }
 
 @keyframes dash {
   to {
-    stroke-dashoffset: -100;
+    stroke-dashoffset: -40;
   }
 }
 
@@ -43,62 +45,52 @@ html {
 body {
   min-height: 100vh;
   font-family: var(--font-display);
-  color: #ffffff;
-  background: linear-gradient(to bottom, #070314 0%, #0d0626 50%, #05020c 100%);
-  background-attachment: fixed;
+  color: var(--color-heading);
+  background: var(--color-page);
   overflow-x: hidden;
 }
 
 ::selection {
-  background: rgb(220 0 211 / 0.45);
-  color: #fff;
+  background: rgb(220 0 211 / 0.3);
 }
 
-/* Glassmorphism spec */
-.glass {
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: rgba(13, 6, 38, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
+/* Cyan → purple gradient used for headings and the primary button. */
 .text-gradient {
-  background-image: linear-gradient(90deg, #00f2fe, #e100ff);
+  background-image: linear-gradient(90deg, #0cffff 0%, #8f4bf0 55%, #dc00d3 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .btn-gradient {
-  background-image: linear-gradient(90deg, #4fd8f0 0%, #7f5cf0 55%, #a63fd1 100%);
-  box-shadow:
-    0 0 24px rgb(0 242 254 / 0.35),
-    0 0 40px rgb(225 0 255 / 0.25);
+  background-image: linear-gradient(90deg, #5ce1f5 0%, #7a63e8 55%, #a53bd0 100%);
+  box-shadow: 0 8px 24px -8px rgb(122 99 232 / 0.7);
 }
 
 .line-flow {
-  animation: dash 6s linear infinite;
+  animation: dash 5s linear infinite;
 }
 
-/* Form fields with gradient focus ring */
+/* Dark form fields with gradient focus ring (design-system "active state"). */
 .field-ring {
   border: 1px solid transparent;
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   background:
-    linear-gradient(rgba(5, 2, 12, 0.55), rgba(5, 2, 12, 0.55)) padding-box,
-    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)) border-box;
+    linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)) padding-box,
+    linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06)) border-box;
+  transition: box-shadow 0.2s;
 }
 
 .field-ring:focus-within {
   background:
-    linear-gradient(rgba(5, 2, 12, 0.85), rgba(5, 2, 12, 0.85)) padding-box,
-    linear-gradient(90deg, #00f2fe, #7f00ff, #e100ff) border-box;
-  box-shadow: 0 0 18px rgb(127 0 255 / 0.25);
+    linear-gradient(#1d0d3f, #1d0d3f) padding-box,
+    linear-gradient(90deg, #0cffff, #8f4bf0, #dc00d3) border-box;
+  box-shadow: 0 0 18px rgb(143 75 240 / 0.35);
 }
 
 .field-ring[data-error="true"] {
   background:
-    linear-gradient(rgba(5, 2, 12, 0.7), rgba(5, 2, 12, 0.7)) padding-box,
+    linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)) padding-box,
     linear-gradient(#ff4d4d, #ff4d4d) border-box;
 }
 

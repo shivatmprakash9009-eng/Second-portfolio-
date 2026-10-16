@@ -7,7 +7,7 @@ export function RecentWork() {
     <section id="work" className="mx-auto max-w-6xl overflow-x-clip px-6 py-24 md:px-12">
       <div className="text-center">
         <SplitHeading text="Recent Work" />
-        <p className="mt-3 font-sans text-sm text-subtle">
+        <p className="mt-3 font-display text-base text-magenta">
           A collection of projects I&apos;ve worked on.
         </p>
       </div>

@@ -10,9 +10,8 @@ type Props = {
 };
 
 /**
- * Section heading that reveals word by word from behind a mask when it
- * reaches 80% of the viewport. The cyan→magenta gradient runs continuously
- * across all words.
+ * Section heading (Josefin Sans semi-bold, cyan → purple gradient) that reveals
+ * word by word from behind a mask at 80% of the viewport.
  */
 export function SplitHeading({ text, className }: Props) {
   const root = useRef<HTMLDivElement>(null);
@@ -20,8 +19,7 @@ export function SplitHeading({ text, className }: Props) {
 
   useGSAP(
     () => {
-      const inner = gsap.utils.toArray<HTMLElement>("[data-word]");
-      gsap.from(inner, {
+      gsap.from(gsap.utils.toArray<HTMLElement>("[data-word]"), {
         y: 50,
         opacity: 0,
         stagger: 0.05,
@@ -40,11 +38,11 @@ export function SplitHeading({ text, className }: Props) {
   return (
     <div ref={root}>
       <h2
+        aria-label={text}
         className={cn(
-          "font-display text-5xl font-semibold tracking-tight md:text-6xl",
+          "font-display text-5xl font-semibold tracking-[-0.02em] md:text-[4.125rem] md:leading-[1.1]",
           className,
         )}
-        aria-label={text}
       >
         {words.map((word, i) => (
           <span
@@ -54,9 +52,8 @@ export function SplitHeading({ text, className }: Props) {
           >
             <span
               data-word
-              className="inline-block bg-clip-text text-transparent"
+              className="text-gradient inline-block"
               style={{
-                backgroundImage: "linear-gradient(90deg, #0cffff, #dc00d3)",
                 backgroundSize: `${words.length * 100}% 100%`,
                 backgroundPosition: `${
                   words.length > 1 ? (i / (words.length - 1)) * 100 : 0

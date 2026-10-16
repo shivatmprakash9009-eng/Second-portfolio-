@@ -3,10 +3,11 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 
+// Soft pink / violet / cyan washes behind the light sections (as in the mockup).
 const blobs = [
-  { className: "left-[-10%] top-[5%] size-[42rem] bg-indigo/40", depth: 1 },
-  { className: "right-[-12%] top-[30%] size-[38rem] bg-magenta/30", depth: 1.6 },
-  { className: "left-[20%] bottom-[-15%] size-[36rem] bg-neon/20", depth: 0.7 },
+  { className: "left-[-14%] top-[38%] size-[34rem] bg-magenta/20", depth: 1 },
+  { className: "right-[-14%] top-[58%] size-[36rem] bg-[#8f4bf0]/20", depth: 1.6 },
+  { className: "left-[30%] top-[80%] size-[30rem] bg-cyan/20", depth: 0.7 },
 ];
 
 export function ParallaxBackground() {
@@ -14,17 +15,16 @@ export function ParallaxBackground() {
 
   useGSAP(
     () => {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const scrollLayers = gsap.utils.toArray<HTMLElement>("[data-scroll]");
       const mouseLayers = gsap.utils.toArray<HTMLElement>("[data-blob]");
 
-      // parallelY: slow vertical drift tied to page scroll
+      // parallelY: vertical drift tied to scroll
       scrollLayers.forEach((layer) => {
         const depth = Number(layer.dataset.depth ?? 1);
         gsap.to(layer, {
-          y: -160 * depth,
+          y: -180 * depth,
           ease: "none",
           scrollTrigger: {
             trigger: document.body,
@@ -35,7 +35,7 @@ export function ParallaxBackground() {
         });
       });
 
-      // parallelX / parallelY: differential offsets from cursor position
+      // parallelX / parallelY: cursor-driven offsets (xPercent / yPercent = mouse * 20)
       const movers = mouseLayers.map((layer) => ({
         depth: Number(layer.dataset.depth ?? 1),
         x: gsap.quickTo(layer, "xPercent", { duration: 1.2, ease: "power3.out" }),
@@ -68,7 +68,7 @@ export function ParallaxBackground() {
           <div
             data-blob
             data-depth={b.depth}
-            className={`absolute rounded-full blur-[120px] ${b.className}`}
+            className={`absolute rounded-full blur-[110px] ${b.className}`}
           />
         </div>
       ))}

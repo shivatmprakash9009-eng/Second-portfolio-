@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { GithubIcon } from "@/components/ui/icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/lib/data";
 
@@ -36,54 +36,58 @@ export function ProjectCard({ project, index }: Props) {
     { scope: root, dependencies: [imageLeft] },
   );
 
+  const iconClass = "text-body/50 transition-colors hover:text-magenta";
+
   return (
-    <article
-      ref={root}
-      className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-0"
-    >
+    <article ref={root} className="relative grid grid-cols-1 lg:grid-cols-12">
+      {/* image inside a dark purple frame */}
       <div
         className={cn(
-          "glass relative aspect-[16/10] w-full overflow-hidden rounded-2xl lg:row-start-1",
-          imageLeft
-            ? "lg:col-span-7 lg:col-start-1"
-            : "lg:col-span-7 lg:col-start-6",
+          "relative aspect-[16/10] overflow-hidden rounded-xl bg-card p-2 shadow-[0_30px_70px_-30px_rgba(27,11,61,0.7)] lg:row-start-1 lg:col-span-7",
+          imageLeft ? "lg:col-start-1" : "lg:col-start-6",
         )}
       >
-        <Image
-          src={project.image}
-          alt={`${project.title} preview`}
-          fill
-          sizes="(min-width: 1024px) 40rem, 100vw"
-          className={cn(
-            "object-cover",
-            project.tint && "hue-rotate-[190deg] saturate-150",
-          )}
-        />
-        {project.tint && (
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-br from-neon/40 via-indigo/30 to-ink/60 mix-blend-color"
+        <div className="relative size-full overflow-hidden rounded-lg">
+          <Image
+            src={project.image}
+            alt={`${project.title} preview`}
+            fill
+            sizes="(min-width: 1024px) 40rem, 100vw"
+            className={cn(
+              "object-cover",
+              project.tint && "hue-rotate-[190deg] saturate-150",
+            )}
           />
-        )}
+          {project.tint && (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-br from-cyan/40 via-[#8f4bf0]/30 to-ink/60 mix-blend-color"
+            />
+          )}
+        </div>
       </div>
 
+      {/* title + dark text card, overlapping the image edge */}
       <div
         className={cn(
-          "relative z-10 lg:row-start-1 lg:mb-8",
+          "relative z-10 mt-5 lg:row-start-1 lg:mt-0 lg:flex lg:flex-col lg:justify-end lg:pb-8",
           imageLeft
-            ? "lg:col-span-6 lg:col-start-7"
-            : "lg:col-span-6 lg:col-start-1",
+            ? "lg:col-span-6 lg:col-start-7 lg:-ml-14"
+            : "lg:col-span-6 lg:col-start-1 lg:-mr-14 lg:items-end lg:text-right",
         )}
       >
-        <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-neon">
+        <p className="font-sans text-[0.7rem] font-medium uppercase tracking-[0.2em] text-magenta">
           Featured Project
         </p>
-        <h3 className="mb-4 mt-1 font-display text-3xl font-semibold text-white md:text-4xl">
+        <h3 className="mb-4 mt-1 font-display text-3xl font-semibold tracking-[-0.01em] text-heading md:text-[2.5rem]">
           {project.title}
         </h3>
 
-        <div className="glass rounded-xl p-6 shadow-[0_20px_60px_-20px_rgba(127,0,255,0.45)]">
-          <p className="font-display text-sm leading-7 text-muted">
+        <div
+          className="max-w-lg rounded-xl p-6 text-left shadow-[0_24px_60px_-20px_rgba(27,11,61,0.8)] ring-1 ring-white/10"
+          style={{ background: "linear-gradient(135deg, #1b0b3d 0%, #2a1160 100%)" }}
+        >
+          <p className="font-display text-[0.8rem] leading-[1.85] text-white/85">
             {project.description}
           </p>
 
@@ -91,33 +95,51 @@ export function ProjectCard({ project, index }: Props) {
             {project.stack.map((tech) => (
               <li
                 key={tech}
-                className="glass rounded-full px-3 py-1 font-sans text-[0.7rem] font-medium text-white/90"
+                className="rounded-full bg-white/10 px-3 py-1 font-sans text-[0.68rem] font-medium text-white/90 ring-1 ring-white/10"
               >
                 {tech}
               </li>
             ))}
           </ul>
+        </div>
 
-          <div className="mt-5 flex items-center gap-4 text-muted">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${project.title} on GitHub`}
-              className="transition-colors hover:text-white"
-            >
-              <GithubIcon />
-            </a>
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${project.title} live preview`}
-              className="transition-colors hover:text-white"
-            >
-              <ExternalLink size={20} />
-            </a>
-          </div>
+        <div className="mt-4 flex items-center gap-4">
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${project.title} on GitHub`}
+            className={iconClass}
+          >
+            <GithubIcon width={18} height={18} />
+          </a>
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${project.title} live preview`}
+            className={iconClass}
+          >
+            <ExternalLink size={18} />
+          </a>
+          <a
+            href="https://x.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on X"
+            className={iconClass}
+          >
+            <XIcon width={17} height={17} />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on LinkedIn"
+            className={iconClass}
+          >
+            <LinkedinIcon width={17} height={17} />
+          </a>
         </div>
       </div>
     </article>

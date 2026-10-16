@@ -68,7 +68,7 @@ function Field({
         )}
       </div>
       {error && (
-        <p id={errId} role="alert" className="mt-1 font-sans text-[0.7rem] text-[#ff5c5c]">
+        <p id={errId} role="alert" className="mt-1 font-sans text-[0.7rem] text-[#ff6b6b]">
           {error}
         </p>
       )}
@@ -105,9 +105,9 @@ export function Contact() {
   };
 
   const rowClass =
-    "group flex items-center gap-4 font-display text-sm text-white/90 transition-colors hover:text-white";
+    "group flex items-center gap-4 font-display text-sm text-heading transition-colors hover:text-ink";
   const iconWrap =
-    "flex size-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-neon to-electric text-white";
+    "flex size-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan via-[#8f4bf0] to-magenta text-white";
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-6 py-24 md:px-12">
@@ -120,13 +120,16 @@ export function Contact() {
           <h3 className="text-gradient font-display text-3xl font-semibold md:text-4xl">
             {contact.heading}
           </h3>
+          <p className="mt-4 max-w-md font-display text-[0.95rem] leading-[1.9] text-body">
+            Have a project in mind, or just want to say hi? Send me a message and I&apos;ll get back to you soon.
+          </p>
           <ul className="mt-8 space-y-5">
             <li>
               <a href={`tel:${contact.phone.replace(/\s/g, "")}`} className={rowClass}>
                 <span className={iconWrap}>
                   <Phone size={18} />
                 </span>
-                <span className="underline decoration-transparent underline-offset-4 transition-colors group-hover:decoration-neon">
+                <span className="underline decoration-transparent underline-offset-4 transition-colors group-hover:decoration-magenta">
                   {contact.phone}
                 </span>
               </a>
@@ -136,7 +139,7 @@ export function Contact() {
                 <span className={iconWrap}>
                   <Mail size={18} />
                 </span>
-                <span className="underline decoration-transparent underline-offset-4 transition-colors group-hover:decoration-neon">
+                <span className="underline decoration-transparent underline-offset-4 transition-colors group-hover:decoration-magenta">
                   {contact.email}
                 </span>
               </a>
@@ -153,7 +156,8 @@ export function Contact() {
         <form
           onSubmit={onSubmit}
           noValidate
-          className="glass space-y-5 rounded-2xl p-6 shadow-[0_30px_80px_-30px_rgba(127,0,255,0.5)] md:p-8"
+          className="space-y-5 rounded-2xl p-6 shadow-[0_30px_80px_-30px_rgba(27,11,61,0.8)] ring-1 ring-white/10 md:p-8"
+          style={{ background: "linear-gradient(135deg, #1b0b3d 0%, #2a1160 100%)" }}
         >
           <Field
             label="Name"
@@ -181,10 +185,10 @@ export function Contact() {
             placeholder="How can I help?"
             onChange={onChange}
           />
-          <MagneticButton type="submit" className="w-full" strength={0.12}>
-            Send Message
+          <MagneticButton type="submit" strength={0.2}>
+            Send message
           </MagneticButton>
-          <p role="status" className="min-h-5 text-center font-sans text-xs text-neon">
+          <p role="status" className="min-h-5 text-center font-sans text-xs text-cyan">
             {sent ? "Opening your mail app with your message…" : ""}
           </p>
         </form>
